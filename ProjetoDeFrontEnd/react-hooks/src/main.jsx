@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './ColumnCard/App/app'
-  
+import Form from './Form/Form'
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <Form/>
   </React.StrictMode>
 )

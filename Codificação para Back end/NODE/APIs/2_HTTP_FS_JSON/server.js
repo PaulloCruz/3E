@@ -1,118 +1,144 @@
-import http from "node:http";
-import fs from "node:fs";
-import { v4 as uuidv4 } from "uuid";
-import { join } from "node:path";
-const PORT = 3333;
-// titulo, autor, genero, anoPublicação,[personagens],
+import http from 'node:http'
+import fs from 'node:fs'
+
+const PORT = 3333
+
+
 const server = http.createServer((request, response) => {
-  const { url, method } = request;
-
-  //em qualquer requisição ele vai no livros.json e ler as informações e coloca em um objto
-  fs.readFile("livros.json", "utf8", (err, data) => {
-    if (err) {
-      response.writeHead(500, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ message: "Erro interno do servidor 1" }));
-      return;
-    }
-
-    let jsonData = [];
-    try {
-      jsonData = JSON.parse(data);
-    } catch (error) {
-      console.log(error);
-    }
-    if (url === "/livros" && method === "GET") {
-      //listar info
-      response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(JSON.stringify(jsonData));
-    } else if (url === "/livros" && method === "POST") {
-      // cadastrar
-      let body = "";
-      request.on("data", (chunk) => {
-        body += chunk.toString();
-      });
-      request.on("end", () => {
-        // o novo livro recebe as informações do formulario, e antes de enviar essa variavel par ao json coloca ela dentr do array e dps de colocar dentro do array manda pro json, pelo metodo push
-        const novoLivro = JSON.parse(body);
-        novoLivro.id = uuidv4();
-        jsonData.push(novoLivro);
-        fs.writeFile(
-          "livros.json",
-          JSON.stringify(jsonData, null, 2),
-          (err) => {
-            if (err) {
-              response.writeHead(500, { "Content-Type": "application/json" });
-              response.end(
-                JSON.stringify({ message: "erro interno do servidor 2" })
-              );
-              return;
-            }
-            response.writeHead(201, { "Content-Type": "applcation/json" });
-            response.end(JSON.stringify(novoLivro));
-          }
-        );
-        //onde vai escrever; o que é vai mandar pro arquivo(formato json); terceiro params é a função, no json.stringify é onde passa os arquivos, null representa o replace(no caso vai substituir nada), 2 trabalha na formatação
-      });
-    } else if (url.startsWith("/livros/") && method === "PUT") {
-      //atualizar
-      const id = url.split("/")[2];
-      let body = " ";
-      request.on("data", (chunk) => {
-        body += chunk.toString();
-      });
-      request.on("end", () => {
-        // request.on é um evento que fica vendo todas as alterações
-        const livroAtualizado = JSON.parse(body);
-
-        const index = jsonData.findIndex((livro) => livro.id == id);
-        if (index !== -1) {
-          jsonData[index] = { ...jsonData[index], ...livroAtualizado };
-          fs.writeFile(
-            "livros.json",
-            JSON.stringify(jsonData, null, 2),
-            (err) => {
-              if (err) {
-                response.writeHead(500, { "Content-Type": "application/json" });
-                response.end(
-                  JSON.stringify({ message: "erro interno do servidor 3" })
-                );
-                return;
-              }
-              response.writeHead(200, { "Content-Type": "applcation/json" });
-              response.end(JSON.stringify(jsonData[index]));
-            }
-          );
+    const { method, url } = request
+    fs.readFile('funcionarios.json', 'utf8', (err, data) => {
+        if (err) {
+            response.writeHead(500, { 'Content-Type': 'application/json' })
+            response.end(JSON.stringify({ message: "Erro ao buscar os dados" }))
+            return;
         }
-      });
-    } else if (url.startsWith('/livros/') && method=='DELETE') {//DELETE
-        const id = url.split('/')[2]
-        const index = jsonData.findIndex((livro) => livro.id == id)
-        if(index!==1){
-            jsonData.splice(index,1)
-            fs.writeFile(
-                "livros.json",
-                JSON.stringify(jsonData,null,2),(err)=>{
-                    if(err){
-                        response.writeHead(500,{'Content-Type':'application/json'})
-                        response.end(
-                            JSON.stringify({message:'Erro interno do servidor 4'})
-                        )
-                        return
-                    }
-                    response.writeHead(200,{'Content-type':'application/json'})
-                    response.end(
-                        JSON.stringify({message:'Livro removido com sucesso'})
-                    )
+
+        let jsonData = []
+
+        try {
+            jsonData = JSON.parse(data)
+        } catch (error) {
+            console.log(`Erro ao ler o arquivo jsonData ${error}`)
+        }
+
+        if (method === 'GET' && url === '/empregados') {
+            fs.readFile('funcionarios.json', 'utf8', (err) => {
+                if (err) {
+                    response.writeHead(500, { 'Content-Type': 'application/json' })
+                    response.end(JSON.stringify({ message: "Erro ao buscar os dados" }))
+                    return
                 }
-            )         
+
+                const jsonData = JSON.parse(data)
+
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify(jsonData))
+
+            });
         }
-    } else {
-      response.writeHead(404, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ message: "Página não encontrada" }));
-    }
-  });
-});
+        else if (method === 'GET' && url === '/empregados/count') {
+            fs.readFile("funcionarios.json", "utf-8", (err, data) => {
+                if (err) {
+                    response.writeHead(500, { 'Content-Type': 'application/json' })
+                    response.end(JSON.stringify({ message: "Erro ao ler o arquivo" }))
+                }
+                const jsonData = JSON.parse(data)
+                const totalFuncionarios = jsonData.length
+
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify({ message: `total de funcionarios: ${totalFuncionarios}` }))
+            })
+        }
+        else if (method === 'GET' && url.startsWith('/empregados/PorCargo/')) {
+            const cargo = url.split("/")[3]
+            fs.readFile('funcionarios.json','utf8',(err,data)=>{
+              if(err){
+                response.writeHead(500,{"Content-Type":"application/json"})
+                response.end(JSON.stringify({message:"Erro ao ler o arquivo"}))
+                }
+                const jsonData = JSON.parse(data)
+
+                const funcionarioPorCargo = jsonData.filter((funcionario)=>funcionario.cargo===cargo)
+
+                if(funcionarioPorCargo.length === 0){
+                  response.writeHead(404,{"Content-Type":"application/json"})
+                  response.end(JSON.stringify({message:'Funcionario não encontrado'}))
+                }
+            })
+            response.end()
+            // console.log('GET /empregados/PorCargo/{cargo}')
+        }
+        else if (method === 'GET' && url.startsWith('/empregados/porHabilidade/')) {
+            console.log('GET /empregados/porHabilidade/{Habilidade}')
+            response.end()
+        }
+        else if (method === 'GET' && url.startsWith('/empregados/porFaixaSalarial/')) {
+            console.log('GET /empregados/porFaixaSalarial/{FaixaSalarial}}')
+            response.end()
+        }
+        else if (method === 'GET' && url.startsWith('/empregados')) { //unico usuario
+            const id = parseInt(url.split('/')[2])
+            //localhost:3333/empregados/3
+            fs.readFile('funcionarios.json', 'utf8', (err, data) => {
+                if (err) {
+                    response.writeHead(500, { 'Content-Type': 'application/json' })
+                    response.end(JSON.stringify({ message: "Erro ao ler o arquivo" }))
+                }
+                const jsonData = JSON.parse(data)
+
+                const indexFuncionario = jsonData.findIndex((funcionario) => funcionario.id === id)
+
+                if (indexFuncionario === -1) {
+
+                    response.writeHead(404, { 'Content-Type': 'application/json' })
+                    response.end(JSON.stringify({ message: "Funcionário não encontrado" }))
+                    return
+                }
+                const funcionarioEncontrado = jsonData[indexFuncionario]
+
+                response.writeHead(200, { 'Content-Type': 'application/json' })
+                response.end(JSON.stringify(funcionarioEncontrado))
+            })
+        }
+        else if (method == 'POST' && url === '/empregados') {
+            let body = ''
+            request.on('data', (chunk) => {
+                body += chunk
+            })
+            request.on('end', () => {
+                const novoFuncionario = JSON.parse(body)
+                novoFuncionario.id = jsonData.length + 1
+                jsonData.push(novoFuncionario)
+
+                fs.writeFile("funcionarios.json", JSON.stringify(jsonData, null, 2),
+                    (err) => {
+                        if (err) {
+                            response.writeHead(500, { 'Content-Type': 'application/json' })
+                            response.end(JSON.stringify({ message: 'Erro interno no servidor}' }))
+                            return
+                        }
+                        response.writeHead(200, { 'Content-Type': 'application/json' })
+                        response.end(JSON.stringify(novoFuncionario))
+                    })
+            })
+        } else if (method == 'PUT' && url.startsWith('/empregados/')) {
+            console.log('POST /empregados/{id}: ')
+            response.end()
+        }
+        else if (method == 'DELETE' && url.startsWith('/empregados/')) {
+            console.log('POST /empregados/{id}: ')
+            response.end()
+        } else {
+            response.writeHead(500, { 'Content-Type': 'application/json' })
+            response.end(JSON.stringify({ message: "PÁGINA NÃO ENCONTRADA" }))
+
+        }
+
+
+    })
+})
 
 server.listen(PORT, () => {
-  console.log(`Servidor on PORT ${PORT}`);
-});
+    console.log(`Servidor on PORT: ${PORT} 😎`)
+})
+
