@@ -90,7 +90,7 @@ const Form = () => {
       <p><h5>senha:</h5>{senha}</p>
       <p><h5>Cep:</h5>{cep}</p>
       <p><h5>Rua:</h5>{rua}</p>
-      <p><h5>Numero:</h5>{numero}</p>''
+      <p><h5>Numero:</h5>{numero}</p>
       <p><h5>Bairro:</h5>{bairro}</p>
       <p><h5>Cidade:</h5>{cidade}</p>
       <p><h5>Estado:</h5>{estado}</p>

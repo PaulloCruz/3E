@@ -5,4 +5,4 @@ const ButtonModal = ({setModal}) =>{
     )
 }
 
-export default ButtonModal
+    export default ButtonModal

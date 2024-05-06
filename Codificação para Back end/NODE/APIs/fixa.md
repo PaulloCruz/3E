@@ -1,4 +1,4 @@
-Para usar o get precisa de url base + endpoint + parametro
+Para usar o get precisa de urlBase + endpoint + parametro
 https:localhost:3333/user/1
 ate o 3333 é a pagina base (url)
 

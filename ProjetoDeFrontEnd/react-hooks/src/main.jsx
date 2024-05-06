@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Form from './Form/Form'
+import App from './Avaliativa02/App/App'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Form/>
+    <App/>
   </React.StrictMode>
 )

@@ -39,30 +39,25 @@ const server = http.createServer((request, response) => {
     const cargo = url.split("/")[3];
 
     lerDadosFuncionarios((err, funcionarios) => {
-        if (err) {
-          response.writeHead(500, { "Content-Type": "application/json" });
-          response.end(JSON.stringify({ message: "Erro interno do servidor" }));
-        }
-        if (funcionarios.length === 0) {
+      if (err) {
+        response.writeHead(500, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ message: "Erro interno do servidor" }));
+      }
+      if (funcionarios.length === 0) {
         response.writeHead(404, { "Content-Type": "application/json" });
         response.end(JSON.stringify({ message: "Funcionario não encontrado" }));
         return;
-        }
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(funcionarios.filter((funcionario) =>funcionario.cargo === cargo)));   
-       
-      });
-
-        
-  
-
-     
-
-   
+      }
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(
+        JSON.stringify(
+          funcionarios.filter((funcionario) => funcionario.cargo === cargo)
+        )
+      );
+    });
 
     //   response.writeHead(200, { "Content-Type": "application/json" });
     //   response.end(JSON.stringify(funcionarioPorCargo));
-
   } else if (method === "GET" && url.startsWith("/empregados/porHabilidade/")) {
     const habilidade = url.split("/")[3];
     fs.readFile("funcionarios.json", "utf8", (err, data) => {
@@ -89,9 +84,7 @@ const server = http.createServer((request, response) => {
       response.writeHead(200, { "Content-Type": "application/json" });
       response.end(JSON.stringify(funcionarioPorHabilidade));
     });
-  } else if (
-    method === "GET" &&
-    url.startsWith("/empregados/porFaixaSalarial")
+  } else if (method === "GET" && url.startsWith("/empregados/porFaixaSalarial")
   ) {
     const urlParams = new URLSearchParams(url.split("?")[1]);
     const minSalario = urlParams.get("minSalario");
@@ -202,7 +195,7 @@ const server = http.createServer((request, response) => {
           response.writeHead(404, { "Content-Type": "application/json" });
           response.end(
             JSON.stringify({ message: "funcionario não encontrado" })
-          );
+        );
           return;
         }
         const funcionarioAtualizado = JSON.parse(body);
