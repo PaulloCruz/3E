@@ -33,3 +33,6 @@ if(url === "/users" && method === "GET") {//Buscar todos os usuarios
 } else {
 //Recurso não encontrado
 }
+
+-----------ESTRUTURA FS-----------
+    fs.readFile('ondeEstáOarquivo','utf8',callback)
