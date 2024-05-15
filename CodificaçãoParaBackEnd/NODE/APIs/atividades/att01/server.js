@@ -28,27 +28,16 @@ const server = http.createServer((request, response) => {
 
   if (url === "/participants" && method === "POST") {
     //Cadastrar novo participante
-    let body = "";
-    request.on("data", (chunk) => {
-      body += chunk.toString();
+    let body = ""; //iniciando uma variavel body como string vazia e sera usada para acumular os dados recebidos pelas solicitações de dados
+    request.on("data", (chunk) => { // esta configurando um ouvinte para o evento data, sempre que um pedaço de dado é recebido ele ativa a função callback com um pedaço de dados como argumento
+      body += chunk.toString(); //o pedaço de dados recebido é convertido para string e adicionado a variavel body
     });
-    request.on("end", () => {
-      const novoUsuario = JSON.parse(body);
-      if (
-        novoUsuario.idade >= 16 &&
-        novoUsuario.password == novoUsuario.VerificaPassword
-      ) {
+    request.on("end", () => { //ouvinte para quando todos os dados são recebidos e o fluxo termina
+      const novoUsuario = JSON.parse(body); //a string acumulada "body" é convertida para JavaScript 
         novoUsuario.id = users.length + 1;
         users.push(novoUsuario);
         response.writeHead(201, { "Content-Type": "application/json" });
         response.end(JSON.stringify(novoUsuario));
-      } else {
-        // error
-        response.writeHead(404, { "Content-Type": "application/json" });
-        response.end(
-          JSON.stringify({ message: "Erro ao tentar cadastrar usuario" })
-        );
-      }
     });
   } else if (url === "/participants" && method === "GET") {
     //Lista de todos usuarios

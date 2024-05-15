@@ -1,0 +1,50 @@
+[
+  {
+    "nomeUser": "Paulo",
+    "email": "paulo@gmail.com",
+    "senha": "123456",
+    "dataRegistro": "15.05",
+    "perfil": {
+      "nome": "Paulo",
+      "bio": "bio",
+      "imgPerfil": "img"
+    },
+    "id": 1
+  },
+  {
+    "nomeUser": "Paulo",
+    "email": "paulo@gmail.com",
+    "senha": "123456",
+    "dataRegistro": "15.05",
+    "perfil": {
+      "nome": "Paulo",
+      "bio": "bio",
+      "imgPerfil": "img"
+    },
+    "id": 2
+  },
+  {
+    "nomeUser": "Paulo",
+    "email": "paulo@gmail.com",
+    "senha": "123456",
+    "dataRegistro": "15.05",
+    "perfil": {
+      "nome": "Paulo",
+      "bio": "bio",
+      "imgPerfil": "img"
+    },
+    "id": 3
+  },
+  {
+    "nomeUser": "Paulo",
+    "email": "paulo@gmail.com",
+    "senha": "123456",
+    "dataRegistro": "15.05",
+    "perfil": {
+      "nome": "Paulo",
+      "bio": "bio",
+      "imgPerfil": "img"
+    },
+    "id": 4
+  }
+]
