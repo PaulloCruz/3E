@@ -2,7 +2,7 @@
 const Home = ()=>{
 return(
     <>
-    <h1>esta é a minha pagina sobre</h1></>
+    <h1>esta é a minha pagina Home</h1></>
 )
 }
 
