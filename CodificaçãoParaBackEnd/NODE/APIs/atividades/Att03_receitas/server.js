@@ -81,7 +81,7 @@ const server = http.createServer((request, response) => {
           );
           return;
         }
-
+        // tirar 
         const indexReceita = receitas.findIndex(
           (receitas) => receitas.id === id
         );
@@ -149,7 +149,7 @@ const server = http.createServer((request, response) => {
     const resultadoBusca = receitas.filter(
       (receitas) =>
         receitas.nome.includes(termo) ||
-        receita.categoria.includes(termo) ||
+        receita.categoria.includes(termo) || 
         receitas.ingredientes.includes(termo)
     );
   } else {

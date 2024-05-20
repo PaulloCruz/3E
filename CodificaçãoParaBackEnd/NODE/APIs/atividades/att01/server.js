@@ -20,24 +20,23 @@ const PORT = 3333;
 // Códigos
 const users = [];
 const server = http.createServer((request, response) => {
-  
-
-
   const { method, url } = request;
   //   logica
 
   if (url === "/participants" && method === "POST") {
     //Cadastrar novo participante
     let body = ""; //iniciando uma variavel body como string vazia e sera usada para acumular os dados recebidos pelas solicitações de dados
-    request.on("data", (chunk) => { // esta configurando um ouvinte para o evento data, sempre que um pedaço de dado é recebido ele ativa a função callback com um pedaço de dados como argumento
+    request.on("data", (chunk) => {
+      // esta configurando um ouvinte para o evento data, sempre que um pedaço de dado é recebido ele ativa a função callback com um pedaço de dados como argumento
       body += chunk.toString(); //o pedaço de dados recebido é convertido para string e adicionado a variavel body
     });
-    request.on("end", () => { //ouvinte para quando todos os dados são recebidos e o fluxo termina
-      const novoUsuario = JSON.parse(body); //a string acumulada "body" é convertida para JavaScript 
-        novoUsuario.id = users.length + 1;
-        users.push(novoUsuario);
-        response.writeHead(201, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(novoUsuario));
+    request.on("end", () => {
+      //ouvinte para quando todos os dados são recebidos e o fluxo termina
+      const novoUsuario = JSON.parse(body); //a string acumulada "body" é convertida para JavaScript
+      novoUsuario.id = users.length + 1;
+      users.push(novoUsuario);
+      response.writeHead(201, { "Content-Type": "application/json" });
+      response.end(JSON.stringify(novoUsuario));
     });
   } else if (url === "/participants" && method === "GET") {
     //Lista de todos usuarios
@@ -65,27 +64,30 @@ const server = http.createServer((request, response) => {
         message: `Atualmente tem ${over18.length} e eles são \n ${over18}`,
       })
     );
-  } else if (url == "/participants/city/most" && method==="GET") {
+  } else if (url == "/participants/city/most" && method === "GET") {
     //Identificar cidade com maior numero de usuarios
-  const contantoCidade = users.reduce((acc,participants)=>{
-    acc[participants.cidade] = (acc[participants.cidade] || 0)+1 
-    return acc
-  },{})     
-  console.log(contantoCidade)
-  // console.log(Object.entries(contantoCidade))
-  let quantidadeDeParticipantes = 0 
-  let cidadeComMaiorNumeroDeParticipantes = ''
-  Object.entries(contantoCidade).forEach((city,count)=>{
-    if(count>quantidadeDeParticipantes){
-      quantidadeDeParticipantes = count
-      cidadeComMaiorNumeroDeParticipantes = city
-    }
-  })
-  response.setHeader('Content-Type','application/json')
-  response.stringify({"Quantidade total de participantes":quantidadeDeParticipantes, "Cidade com o maior numero de participante":cidadeComMaiorNumeroDeParticipantes7})
-  response.end()
-  }
-   else if (url.startsWith("/participants/") && method === "GET") {
+    const contantoCidade = users.reduce((acc, participants) => {
+      acc[participants.cidade] = (acc[participants.cidade] || 0) + 1;
+      return acc;
+    }, {});
+    console.log(contantoCidade);
+    // console.log(Object.entries(contantoCidade))
+    let quantidadeDeParticipantes = 0;
+    let cidadeComMaiorNumeroDeParticipantes = "";
+    Object.entries(contantoCidade).forEach((city, count) => {
+      if (count > quantidadeDeParticipantes) {
+        quantidadeDeParticipantes = count;
+        cidadeComMaiorNumeroDeParticipantes = city;
+      }
+    });
+    response.setHeader("Content-Type", "application/json");
+    response.stringify({
+      "Quantidade total de participantes": quantidadeDeParticipantes,
+      "Cidade com o maior numero de participante":
+        cidadeComMaiorNumeroDeParticipantes7,
+    });
+    response.end();
+  } else if (url.startsWith("/participants/") && method === "GET") {
     //Buscar usuario especifico (pelo ID)
     const id = url.split("/")[2];
     const user = users.find((element) => element.id == id);
@@ -113,7 +115,8 @@ const server = http.createServer((request, response) => {
         index !== -1 &&
         updateUser.idade >= 16 &&
         updateUser.password == updateUser.VerificaPassword &&
-        updateUser.password == users[index].password && users[index].idade == updateUser.idade
+        updateUser.password == users[index].password &&
+        users[index].idade == updateUser.idade
       ) {
         // se for =-1 é porque deu erro e faz a validação se a idade é menor
         users[index] = { ...users[index], updateUser };
@@ -139,8 +142,7 @@ const server = http.createServer((request, response) => {
       response.writeHead(404, { "Content-Type": "application/json" });
       response.end(JSON.stringify({ message: "erro ao deletar esse usuario" }));
     }
-  } 
-   else {
+  } else {
     //Recurso não encontrado
     response.writeHead(404, { "Content-Type": "application/json" });
     response.end;
