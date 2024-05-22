@@ -1,8 +1,11 @@
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 
 const cores = {
     Black:"hsl(0,0%,0%)",
-    White:"hsl(0,0%,100%)"
+    White:"hsl(0,0%,100%)",
+    AzulSecundario: "#acdee1",
+    AzulPrincipal: '#17d4dc',
 };
 
 export const Logo = styled.img`
@@ -16,11 +19,24 @@ export const Navbar = styled.nav`
   display: flex;
   justify-content:space-around;
   align-items:center;
-  background:${cores.Black};
-  color:${cores.White}
+  background:${cores.White};
+  box-shadow: 5px 0 30px rgba(0,0,0,.1);
+  color:${cores.AzulPrincipal};
 `;
 
 export const DivLogo = styled.div`
 display:flex;
-align-items:center
+align-items:center;
 `;
+
+export const DivNavItens = styled.div`  
+display:flex
+justify-content: space-around;
+flex-direction:row;
+
+`
+export const NavItens = styled(Link)`
+text-decoration:none;
+display:flex;
+align-items:center;
+`
