@@ -14,7 +14,8 @@ export const Logo = styled.img`
 `;
 
 export const Navbar = styled.nav`
-  width: 100%;
+  width: 100%;0,
+    
   height: 100px;
   display: flex;
   justify-content:space-around;
