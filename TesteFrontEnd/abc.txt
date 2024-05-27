@@ -1,0 +1,77 @@
+Conceito:
+
+É um repositório sistêmico de informações ( um local onde vai ser guardada ou armazenada informações uma forma organizada
+
+.
+Cenário:
+
+Dessa forma, podemos encontrar de uma forma mais fácil, a informação que estamos buscando, como se estivéssemos pegando um brinquedo específico em nossa caixa de brinquedo
+
+.
+A importância do banco de dados:
+
+Antigamente a forma como tínhamos de armazenar os dados era através de umas estantes com caixas, que continha vários arquivos dentro delas
+essas caixas tinham uma forma de organizar dados, com o passar do tempo, percebeu-se a importância de ter um lugar para organizar essas informações de forma mais eficiente
+, surge então o conceito de banco de dados, que é uma estrutura organizada para armazenar e gerenciar grandes quantidades de informações de forma eficiente e acessível.
+
+Ter um planejamento de banco de dados e um design dos dados é importante, para manter uma aplicação saudável.
+
+Com um banco de dados bem estruturado, reduz muitos dos erros no desenvolvimento da aplicação e do próprio banco de dados
+.
+Como funciona o banco de dados:
+O banco de dados é organizado em tabelas
+
+As tabelas possuem essa estrutura de linhas e colunas
+
+E também na tabela vamos ter o cabeçalho onde vai informar o que é cada informação
+.
+
+Como funciona o banco de dados:
+
+É importante lembrar que as tabelas, possui os campos que é onde as nessas informações vão ser armazenadas
+
+é assim que fica a estrutura de um banco de dados
+
+contatos > 
+
+nome	telefone	endereço
+carlos	88997755 	um lugar
+.
+
+
+Modelo de entidade e relacionamento
+
+Modelagem de dados é o processo de criar uma representação abstrata e organizada das informações a serem armazenadas em um banco de dados
+
+A modelagem de dados ajuda a garantir a integridade e a eficiência dos dados armazenadas, facilita a análise e a tomada de decisões baseadas em dados
+
+Alguns dos conceitos fundamentais incluem entidades, atributos, relacionamentos e restrições de integridade, fornecendo uma estrutura organizada para os dados
+É um objeto ou conceito do mundo real que pode ser identificado e armazenado no banco de dados. Por exemplo, uma entidade em um sistema de gerenciamento de biblioteca pode ser um livro, um autor ou um leitor.
+
+Modelo de entidades e relacionamentos:
+Entidades:
+- É um objeto ou conceito do mundo real que pode ser identificado e armazenado no banco de dados
+- Por exemplo, uma entidade em um sistema de gerenciamento de uma biblioteca pode ser um livro, um autor ou um leitor
+
+
+
+Modelo de entidades e relacionamentos:
+Atributos:
+- Cada entidade tem atributos, que são as características ou propriedades da entidade
+
+- Por exemplo, um livro pode ter atributos como, título, autor, editora, e data de publicação. OS atributos são representados como colunas nas tabelas do banco de dados
+
+Relacionamentos:
+- Representam as associações entre entidades
+
+- Por exemplo, um livro pode ser escrito por mais autores, e um autor pode escrever um mais livros
+
+	 	
+
+Modelagem do banco de dados
+Conceitual:
+- Modelagem de mais alto nível, onde se define as entidades que estão envolvidas no projeto
+Lógica:
+- Nessa etapa é onde define as relações entre as entidades e também seus atributos
+Físico: 
+- É onde utilizamos ferramentas para construir nosso banco de dados
